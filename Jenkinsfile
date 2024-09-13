@@ -8,6 +8,12 @@ pipeline {
             }
         }
 
+        stage("Install dependencies") {
+            steps {
+                sh "npm install"
+            }
+        }
+
         stage("Run the Server") {
             steps {
                 sh "npm start"
@@ -20,12 +26,12 @@ pipeline {
             echo "Server is running successfully"
             mail to: "venkat.raman.3103@gmail.com",
                  subject: "Pipeline: ${env.JOB_NAME} - ${env.BUILD_NUMBER} Running Successfully",
-                 body: "The build succeeded. Please check."
+                 body: "The Build succeeded. Please check."
         }
         failure {
             mail to: "venkat.raman.3103@gmail.com",
                  subject: "Failed Pipeline: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                 body: "The build failed. Please check."
+                 body: "The Build failed. Please check."
         }
     }
 }
